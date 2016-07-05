@@ -95,11 +95,8 @@ void start()
                               digitalWrite(dfuel1,HIGH);
                               analogWrite(afuelcontrol,10);
                           while(p4 > 5 || p4 < 10) {
-
-                          digitalWrite(dignitor,HIGH);
-                          delay(100);
-                          digitalWrite(dignitor,LOW);
-                          delay(100);
+                              analogWrite(dignitor,200);
+                         
                           }
 
                       
@@ -116,4 +113,4 @@ void start()
                   }
               }    
     }
-
+//higgy
