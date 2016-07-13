@@ -49,10 +49,8 @@ void setup() {
     
     analogReference(DEFAULT);
     Serial.begin(9600);
-    if(digitalRead(destop)==LOW)
-      attachInterrupt(digitalPinToInterrupt(dstartbutton),start,RISING);
-    else 
-      Serial.println("emergency stop is in effect");
+    attachInterrupt(digitalPinToInterrupt(dstartbutton),start,RISING);
+   
 }
 
 void loop() {
@@ -78,9 +76,14 @@ void loop() {
   
 }
 void start()
-    { Serial.print("Starting...");
+    {if(digitalRead(destop)=HIGH)
+      Serial.Print("emergency stop is in effect");
+    else
+     
+      
+      Serial.print("Starting...");
 
-    digitalWrite(doilpump,HIGH);
+      digitalWrite(doilpump,HIGH);
           delay(2000);
           if(oilpressure >= 40) {
 
