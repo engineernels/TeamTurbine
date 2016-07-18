@@ -26,6 +26,8 @@
     const int destop=8;
     const int dignitor=9;
     const int ddataswitch=10;
+    const int throttleservo=16;
+    const int servo
     float t1=((analogRead(at1)-1.25)/.005);
     float t2=((analogRead(at2)-1.25)/.005);
     float t3=((analogRead(at3)-1.25)/.005);
@@ -50,7 +52,7 @@ void setup() {
     analogReference(DEFAULT);
     Serial.begin(9600);
     attachInterrupt(digitalPinToInterrupt(dstartbutton),start,RISING);
-   
+   myservo.attach(13);
 }
 
 void loop() {
@@ -69,7 +71,10 @@ void loop() {
     Serial.print(analogRead(afueltemperature));
     Serial.print(analogRead(amassflow));
     Serial.println(analogRead(aoxysensor));
-    delay(100);
+    servo=analogRead(throttleservo);
+    servo=map(throttleservo,0,1023,0,180);
+    myservo.write(servo);
+    delay(50)
   }
   
   //this is where the safety features will go (overtemp, over pressure and runaway shutoff)
