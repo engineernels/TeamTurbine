@@ -7,6 +7,7 @@
     const int dstartbutton=21;
     const int dmasterswitch=1;
     const int dignitor=5;
+    const int drpm=6;
     const int doilpump=9;
     const int dfuelpump=8;
     const int dfuel_start=10;
@@ -19,6 +20,7 @@
     const int aoilpressure=5;
     const int afuelpressure=6;
     const int astrain=7;
+    const int afuelflow=12;
     const int amassflow=14;
     const int cs1=22;
     const int clk1=23;
@@ -70,7 +72,7 @@ void setup() {
     Serial.begin(9600);
     pinMode(vcc6, OUTPUT); digitalWrite(vcc6, HIGH);
     pinMode(gnd6, OUTPUT); digitalWrite(gnd6, HIGH);
-    starter.attach(9);
+    starter.attach(7); //digital 7 pin
     starter.writeMicroseconds(2000);
     while (!Serial.available());
     Serial.read();
