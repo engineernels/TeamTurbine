@@ -37,11 +37,11 @@
     const int cs5=34;
     const int clk5=35;
     const int do5=36;
-    const int cs6=37;
+    const int cs6=45;
     const int clk6=38;
-    const int do6=39;
-    const int vcc6=40;
-    const int gnd6=41;
+    const int do6=43;
+    const int vcc6=49;
+    const int gnd6=47;
     float p2=((analogRead(ap2)*0.363)-3.6918); // 30=.0363x-3.6918
     float p3=((analogRead(ap3)*0.363)-3.6918); 
     float p4=((analogRead(ap4)*0.363)-3.6918);
