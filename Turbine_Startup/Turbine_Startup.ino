@@ -50,8 +50,8 @@
     float oilpressure=((analogRead(aoilpressure)*0.1213)-11.999); //100=0.1213x-11.999
     float fuelpressure=((analogRead(afuelpressure)*0.1822)-18.268); //150=0.1822x-18.268
     float thrust=((analogRead(astrain)*23041.47)/604); //thrust=stain*Wconstant/gain
-    Servo starter;
-    int s_val=0;
+    //Servo starter;
+   // int s_val=0;
 
     Adafruit_MAX31855 thermocouple1(cs1, clk1, do1);
     Adafruit_MAX31855 thermocouple2(cs2, clk2, do2);
@@ -72,19 +72,27 @@ void setup() {
     Serial.begin(9600);
     pinMode(vcc6, OUTPUT); digitalWrite(vcc6, HIGH);
     pinMode(gnd6, OUTPUT); digitalWrite(gnd6, HIGH);
-    starter.attach(7); //digital 7 pin
-    starter.writeMicroseconds(2000);
-    while (!Serial.available());
-    Serial.read();
-    starter.writeMicroseconds(700);
+    //starter.attach(7); //digital 7 pin
+    //starter.writeMicroseconds(2000);
+    //while (!Serial.available());
+    //Serial.read();
+    //starter.writeMicroseconds(700);
     attachInterrupt(digitalPinToInterrupt(dstartbutton),start,RISING);
-    
+    Serial.begin(9600);
+
+   attachInterrupt(digitalPinToInterrupt(drpm), rpm_fun, RISING);
+
+   half_revolutions = 0;
+
+   rpm = 0;
+
+   timeold = 0;
     delay(500)
   
 }
 
 void loop() {
-  while(digitalRead(ddataswitch)==HIGH){
+  {
     Serial.print(p2);
     Serial.print(p3);
     Serial.print(p4);
@@ -98,14 +106,33 @@ void loop() {
     Serial.print(thermocouple6.readFarenheit());
     Serial.print(thrust);
     Serial.print(analogRead(amassflow));
-    Serial.println(analogRead(aoxysensor));
-    servo=analogRead(throttleservo);
-    servo=map(throttleservo,0,1023,0,179);
-    myservo.write(servo);
-    delay(5000)
+      if (half_revolutions >= 10) {
+
+     //Update RPM every 20 counts, increase this for better RPM resolution,
+
+     //decrease for faster update
+
+     rpm = 30*1000/(millis() - timeold)*half_revolutions;
+
+     timeold = millis();
+
+     half_revolutions = 0;
+
+     Serial.println(rpm,DEC);}
+    else 
+      Serial.println("0");
+    delay(1000)
   }
   
-  //this is where the safety features will go (overtemp, over pressure and runaway shutoff)
+void rpm_fun()
+
+{
+
+   half_revolutions++;
+
+   //Each rotation, this interrupt function is run twice
+
+}  
   
 }
 void start()
