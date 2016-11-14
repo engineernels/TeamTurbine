@@ -106,6 +106,8 @@ void loop() {
     Serial.print(thermocouple6.readFarenheit());
     Serial.print(thrust);
     Serial.print(analogRead(amassflow));
+    if((thermocouple6.readfarenheit)<300){
+      analogwrite(dignitor,255)}
       if (half_revolutions >= 10) {
 
      //Update RPM every 20 counts, increase this for better RPM resolution,
